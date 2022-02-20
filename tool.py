@@ -36,38 +36,42 @@ class Tool:
 
     @classmethod
     def source_decrypt(cls):
-        current_folder = None
-        if os.path.exists(os.path.join(os.path.dirname(__file__), 'original_source_spotv.py')) == True:
-            from .original_source_spotv import SourceSpotv
-            from .original_source_naver_sports import SourceNaverSports
-            from .original_source_coupangplay import SourceCoupangplay
-            from .original_source_reystream import SourceReystream
-            from .original_source_sstv import SourceSSTV
-            
-        else:
-            source_map = []
-            current_folder = os.path.join(os.path.dirname(__file__))
-            if current_folder == '':
-                current_folder = os.getcwd()
-            for filename in os.listdir(current_folder):
-                if filename.startswith('decrypt_') == False:
-                    continue
-                filepath = os.path.join(current_folder, filename)
-                mod_name = filename.replace('decrypt_', '').replace('.py', '')
-                target = filepath.replace('decrypt_', '')
-                text = base64.b64decode(SupportAES.decrypt(SupportFile.read_file(filepath))).decode()
-                SupportFile.write_file(target, text)
+        try:
+            current_folder = None
+            if os.path.exists(os.path.join(os.path.dirname(__file__), 'original_source_spotv.py1')) == True:
+                from .original_source_spotv import SourceSpotv
+                from .original_source_naver_sports import SourceNaverSports
+                from .original_source_coupangplay import SourceCoupangplay
+                from .original_source_reystream import SourceReystream
+                from .original_source_sstv import SourceSSTV
+                
+            else:
+                source_map = []
+                current_folder = os.path.join(os.path.dirname(__file__))
+                if current_folder == '':
+                    current_folder = os.getcwd()
+                for filename in os.listdir(current_folder):
+                    if filename.startswith('decrypt_') == False:
+                        continue
+                    filepath = os.path.join(current_folder, filename)
+                    mod_name = filename.replace('decrypt_', '').replace('.py', '')
+                    target = filepath.replace('decrypt_', '')
+                    text = base64.b64decode(SupportAES.decrypt(SupportFile.read_file(filepath))).decode()
+                    SupportFile.write_file(target, text)
                 from .source_spotv import SourceSpotv
                 from .source_naver_sports import SourceNaverSports
                 from .source_coupangplay import SourceCoupangplay
                 from .source_reystream import SourceReystream
                 from .source_sstv import SourceSSTV
-        
-        source_map = [SourceSpotv(), SourceNaverSports(), SourceCoupangplay(), SourceSSTV(), SourceReystream()]
-        for filename in os.listdir(current_folder):
-            if filename.startswith('source_'):
-                os.remove(os.path.join(current_folder, filename))
-
+            
+            source_map = [SourceSpotv(), SourceNaverSports(), SourceCoupangplay(), SourceSSTV(), SourceReystream()]
+            
+        except:
+            pass
+        finally:
+            for filename in os.listdir(current_folder):
+                if filename.startswith('source_'):
+                    os.remove(os.path.join(current_folder, filename))
         return source_map
 
 
