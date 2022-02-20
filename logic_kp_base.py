@@ -105,7 +105,10 @@ class LogicKPBase(LogicModuleBase):
         m3u = '#EXTM3U\n'
         count = 1
         for source in self.source_map:
-            for key, ch in source.get_list().items():
+            source_ch_list = source.get_list()
+            if source_ch_list == None:
+                continue
+            for key, ch in source_ch_list.items():
                 m3u += M3U_FORMAT.format(
                     id=f"{source.source_name}|{ch.ch_id}",
                     title=ch.get_title(),
