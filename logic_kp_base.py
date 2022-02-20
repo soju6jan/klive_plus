@@ -11,10 +11,16 @@ class LogicKPBase(LogicModuleBase):
         f'{name}_db_version' : '1',
         f'{name}_auto_start' : 'False',
         f'{name}_interval' : '30',
-        f'{name}_use_naver_sports': 'True',
         f'{name}_use_spotv': 'True',
         f'{name}_spotv_username': '',
         f'{name}_spotv_password': '',
+        f'{name}_use_naver_sports': 'True',
+        f'{name}_use_coupangplay': 'True',
+        f'{name}_coupangplay_username': '',
+        f'{name}_coupangplay_password': '',
+        f'{name}_use_sstv': 'True',
+        f'{name}_sstv_only_kor': 'True',
+        f'{name}_use_reystream': 'True',
     }
 
     def __init__(self, P):
@@ -64,7 +70,7 @@ class LogicKPBase(LogicModuleBase):
                             url = ch.url
                         else:
                             url = source.get_url(req_ch_id)
-                        logger.debug(url)
+                        #logger.debug(url)
                         return redirect(url, code=302)
             elif sub == 'reystream.m3u8':
                 for source in self.source_map:
@@ -84,6 +90,7 @@ class LogicKPBase(LogicModuleBase):
     def plugin_load(self):
         from .tool import Tool
         self.source_map = Tool.source_decrypt()
+        logger.info(self.source_map)
 
 
     def get_ch_list(self):

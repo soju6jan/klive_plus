@@ -40,8 +40,9 @@ class Tool:
         if os.path.exists(os.path.join(os.path.dirname(__file__), 'original_source_spotv.py')) == True:
             from .original_source_spotv import SourceSpotv
             from .original_source_naver_sports import SourceNaverSports
-            from .original_source_coupnagplay import SourceCoupangplay
+            from .original_source_coupangplay import SourceCoupangplay
             from .original_source_reystream import SourceReystream
+            from .original_source_sstv import SourceSSTV
             
         else:
             source_map = []
@@ -58,10 +59,11 @@ class Tool:
                 SupportFile.write_file(target, text)
                 from .source_spotv import SourceSpotv
                 from .source_naver_sports import SourceNaverSports
-                from .source_coupnagplay import SourceCoupangplay
+                from .source_coupangplay import SourceCoupangplay
                 from .source_reystream import SourceReystream
+                from .source_sstv import SourceSSTV
         
-        source_map = [SourceSpotv(), SourceNaverSports(), SourceCoupangplay(), SourceReystream()]
+        source_map = [SourceSpotv(), SourceNaverSports(), SourceCoupangplay(), SourceSSTV(), SourceReystream()]
         for filename in os.listdir(current_folder):
             if filename.startswith('source_'):
                 os.remove(os.path.join(current_folder, filename))
