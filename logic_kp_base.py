@@ -90,6 +90,8 @@ class LogicKPBase(LogicModuleBase):
         for source in self.source_map:
             try:
                 source_ch_list = source.get_list()
+                if source_ch_list == None:
+                    continue
                 for source_id, ch in source_ch_list.items():
                     ch_list.append(ch.as_dict())
             except Exception as e: 
