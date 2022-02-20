@@ -12,15 +12,12 @@ class P(object):
     menu = {
         'main' : [package_name, 'KLive+'],
         'sub' : [
-            ['base', '전체'], ['navertv', '네이버 스포츠'], ['log', '로그']
+            ['base', '전체'], ['log', '로그']
         ], 
         'category' : 'tv',
         'sub2' : {
             'base' : [
                 ['setting', '설정'], ['list', '채널목록']
-            ],
-            'navertv' : [
-                ['setting', '설정']
             ],
         }
     }  

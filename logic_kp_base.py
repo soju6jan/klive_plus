@@ -28,7 +28,6 @@ class LogicKPBase(LogicModuleBase):
         self.name = name
 
     def process_menu(self, sub, req):
-        logger.error(sub)
         arg = P.ModelSetting.to_dict()
         arg['sub'] = self.name
         try:
@@ -46,10 +45,11 @@ class LogicKPBase(LogicModuleBase):
             ret = {}
             if sub == 'command':
                 command = req.form['command']
-                logger.debug(command)
-                if command == 'make':
-                    self.task_interface(req.form['arg1'], 'manual')
-                    ret = {'ret':'success', 'msg':'생성을 시작합니다.'}
+                if command == 'broad_list':
+                    ret = {'ret':'success', 'ch_list':self.get_ch_list()}
+                elif command == 'play_url':
+                    data = self.get_url(req.form['arg1'], req.form['arg2'])
+                    ret = {'ret':'success', 'data':{'url':data['url'], 'title':data['current']}}
             return jsonify(ret)
         except Exception as e: 
             P.logger.error(f'Exception:{str(e)}')
@@ -63,15 +63,8 @@ class LogicKPBase(LogicModuleBase):
             elif sub == 'url.m3u8':
                 req_source = req.args.get('source')
                 req_ch_id = req.args.get('ch_id')
-                for source in self.source_map:
-                    if source.source_name == req_source:
-                        ch = source.ch_list[req_ch_id]
-                        if ch.url != None:
-                            url = ch.url
-                        else:
-                            url = source.get_url(req_ch_id)
-                        #logger.debug(url)
-                        return redirect(url, code=302)
+                url = self.get_url(req_source, req_ch_id)['url']
+                return redirect(url, code=302)
             elif sub == 'reystream.m3u8':
                 for source in self.source_map:
                     if source.source_name == 'reystream':
@@ -90,7 +83,6 @@ class LogicKPBase(LogicModuleBase):
     def plugin_load(self):
         from .tool import Tool
         self.source_map = Tool.source_decrypt()
-        logger.info(self.source_map)
 
 
     def get_ch_list(self):
@@ -99,7 +91,7 @@ class LogicKPBase(LogicModuleBase):
             try:
                 source_ch_list = source.get_list()
                 for source_id, ch in source_ch_list.items():
-                    ch_list.append(ch)
+                    ch_list.append(ch.as_dict())
             except Exception as e: 
                 P.logger.error(f'Exception:{str(e)}')
                 P.logger.error(traceback.format_exc())
@@ -122,3 +114,16 @@ class LogicKPBase(LogicModuleBase):
                 )
                 count += 1
         return m3u
+
+
+    def get_url(self, req_source, req_ch_id):
+        data = None
+        for source in self.source_map:
+            if source.source_name == req_source:
+                ch = source.ch_list[req_ch_id]
+                data = ch.as_dict()
+                if ch.url == None:
+                    data['url'] = source.get_url(req_ch_id)
+                #logger.info(d(data))
+                return data
+                

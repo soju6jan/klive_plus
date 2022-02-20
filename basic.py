@@ -36,15 +36,19 @@ class SourceBase:
 
 
 class Channel:
-    def __init__(self, ch_id, ch_name, current, url=None, logo='', info=None):
+    def __init__(self, ch_id, ch_name, current, url=None, logo='', info=None, source=None, source1=None):
         self.ch_name = ch_name
         self.ch_id = ch_id
         self.current = current
         self.url = url
         self.logo = logo
         self.info = info
+        self.source = source
+        self.source1 = source1
         
-
     def get_title(self):
         tmp = f"{self.current} ({self.ch_name})".replace('()', '')
         return tmp
+
+    def as_dict(self):
+        return {attr:getattr(self, attr) for attr in dir(self) if not callable(getattr(self, attr)) and not attr.startswith("__")}
