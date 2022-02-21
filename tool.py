@@ -66,8 +66,9 @@ class Tool:
             
             source_map = [SourceSpotv(), SourceNaverSports(), SourceCoupangplay(), SourceSSTV(), SourceReystream()]
             
-        except:
-            pass
+        except Exception as e: 
+            logger.error(f'Exception:{str(e)}')
+            logger.error(traceback.format_exc())
         finally:
             for filename in os.listdir(current_folder):
                 if filename.startswith('source_'):
