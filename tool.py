@@ -36,6 +36,7 @@ class Tool:
 
     @classmethod
     def source_decrypt(cls):
+        from .plugin import P
         try:
             current_folder = None
             if os.path.exists(os.path.join(os.path.dirname(__file__), 'original_source_spotv.py')) == True:
@@ -67,8 +68,8 @@ class Tool:
             source_map = [SourceSpotv(), SourceNaverSports(), SourceCoupangplay(), SourceSSTV(), SourceReystream()]
             
         except Exception as e: 
-            logger.error(f'Exception:{str(e)}')
-            logger.error(traceback.format_exc())
+            P.logger.error(f'Exception:{str(e)}')
+            P.logger.error(traceback.format_exc())
         finally:
             for filename in os.listdir(current_folder):
                 if filename.startswith('source_'):
