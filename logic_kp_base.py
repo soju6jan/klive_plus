@@ -89,10 +89,13 @@ class LogicKPBase(LogicModuleBase):
         ch_list = []
         for source in self.source_map:
             try:
+
                 if ModelSetting.get_bool(f"{name}_use_{source.source_name}") == False:
+                    logger.debug(f'{source.name} not use')
                     continue
                 source_ch_list = source.get_list()
                 if source_ch_list == None:
+                    logger.debug(f'{source.name} ch_list None')
                     continue
                 for source_id, ch in source_ch_list.items():
                     ch_list.append(ch.as_dict())
