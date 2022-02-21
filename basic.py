@@ -23,7 +23,12 @@ if logger == None:
 class SourceBase:
     def __init__(self):
         self.reset_ch_list()
-        self.get_list()
+        try:
+            self.get_list()
+        except Exception as e: 
+            logger.error(f'Exception:{str(e)}')
+            logger.error(traceback.format_exc())
+            
 
     def get_list(self):
         pass
