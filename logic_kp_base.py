@@ -90,7 +90,6 @@ class LogicKPBase(LogicModuleBase):
         ch_list = []
         for source in self.source_map:
             try:
-
                 if ModelSetting.get_bool(f"{name}_use_{source.source_name}") == False:
                     logger.debug(f'{source.name} not use')
                     continue
@@ -98,6 +97,7 @@ class LogicKPBase(LogicModuleBase):
                 if source_ch_list == None:
                     logger.debug(f'{source.name} ch_list None')
                     continue
+                logger.debug(f"{source.name} {len(source_ch_list.items())}")
                 for source_id, ch in source_ch_list.items():
                     ch_list.append(ch.as_dict())
             except Exception as e: 
@@ -112,9 +112,12 @@ class LogicKPBase(LogicModuleBase):
         count = 1
         for source in self.source_map:
             try:
+                #logger.debug(source.name)
+                #logger.debug(ModelSetting.get_bool(f"{name}_use_{source.source_name}") )
                 if ModelSetting.get_bool(f"{name}_use_{source.source_name}") == False:
                     continue
                 source_ch_list = source.get_list()
+                #logger.debug(len(source_ch_list))
                 if source_ch_list == None:
                     continue
                 for key, ch in source_ch_list.items():
