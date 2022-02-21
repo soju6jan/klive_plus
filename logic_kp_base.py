@@ -89,6 +89,8 @@ class LogicKPBase(LogicModuleBase):
         ch_list = []
         for source in self.source_map:
             try:
+                if ModelSetting.get_bool(f"{name}_use_{source.source_name}") == False:
+                    continue
                 source_ch_list = source.get_list()
                 if source_ch_list == None:
                     continue
@@ -105,19 +107,25 @@ class LogicKPBase(LogicModuleBase):
         m3u = '#EXTM3U\n'
         count = 1
         for source in self.source_map:
-            source_ch_list = source.get_list()
-            if source_ch_list == None:
-                continue
-            for key, ch in source_ch_list.items():
-                m3u += M3U_FORMAT.format(
-                    id=f"{source.source_name}|{ch.ch_id}",
-                    title=ch.get_title(),
-                    group=source.name,
-                    ch_no=str(count+1),
-                    url=ToolUtil.make_apikey_url(f"/{package_name}/api/base/url.m3u8?source={source.source_name}&ch_id={ch.ch_id}"),
-                    logo= ch.logo,
-                )
-                count += 1
+            try:
+                if ModelSetting.get_bool(f"{name}_use_{source.source_name}") == False:
+                    continue
+                source_ch_list = source.get_list()
+                if source_ch_list == None:
+                    continue
+                for key, ch in source_ch_list.items():
+                    m3u += M3U_FORMAT.format(
+                        id=f"{source.source_name}|{ch.ch_id}",
+                        title=ch.get_title(),
+                        group=source.name,
+                        ch_no=str(count+1),
+                        url=ToolUtil.make_apikey_url(f"/{package_name}/api/base/url.m3u8?source={source.source_name}&ch_id={ch.ch_id}"),
+                        logo= ch.logo,
+                    )
+                    count += 1
+            except Exception as e: 
+                P.logger.error(f'Exception:{str(e)}')
+                P.logger.error(traceback.format_exc())
         return m3u
 
 
