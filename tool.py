@@ -38,7 +38,7 @@ class Tool:
     def source_decrypt(cls):
         try:
             current_folder = None
-            if os.path.exists(os.path.join(os.path.dirname(__file__), 'original_source_spotv.py1')) == True:
+            if os.path.exists(os.path.join(os.path.dirname(__file__), 'original_source_spotv.py')) == True:
                 from .original_source_spotv import SourceSpotv
                 from .original_source_naver_sports import SourceNaverSports
                 from .original_source_coupangplay import SourceCoupangplay
