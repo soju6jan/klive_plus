@@ -83,7 +83,7 @@ class LogicKPBase(LogicModuleBase):
     def plugin_load(self):
         from .tool import Tool
         self.source_map = Tool.source_decrypt()
-        logger.debug(self.source_map)
+        #logger.debug(self.source_map)
 
 
     def get_ch_list(self):
