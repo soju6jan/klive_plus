@@ -21,6 +21,7 @@ class LogicKPBase(LogicModuleBase):
         f'{name}_use_sstv': 'True',
         f'{name}_sstv_only_kor': 'True',
         f'{name}_use_reystream': 'True',
+        f'{name}_use_naver_now': 'True',
     }
 
     def __init__(self, P):

@@ -45,6 +45,7 @@ class Tool:
                 from .original_source_coupangplay import SourceCoupangplay
                 from .original_source_reystream import SourceReystream
                 from .original_source_sstv import SourceSSTV
+                from .original_source_naver_now import SourceNaverNow
                 
             else:
                 source_map = []
@@ -64,8 +65,9 @@ class Tool:
                 from .source_coupangplay import SourceCoupangplay
                 from .source_reystream import SourceReystream
                 from .source_sstv import SourceSSTV
+                from .source_naver_now import SourceNaverNow
             
-            source_map = [SourceSpotv(), SourceNaverSports(), SourceCoupangplay(), SourceSSTV(), SourceReystream()]
+            source_map = [SourceSpotv(), SourceNaverSports(), SourceCoupangplay(), SourceNaverNow(), SourceSSTV(), SourceReystream()]
             
         except Exception as e: 
             P.logger.error(f'Exception:{str(e)}')
