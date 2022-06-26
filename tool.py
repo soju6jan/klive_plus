@@ -68,7 +68,6 @@ class Tool:
                 from .source_naver_now import SourceNaverNow
             
             source_map = [SourceSpotv(), SourceNaverSports(), SourceCoupangplay(), SourceNaverNow(), SourceSSTV(), SourceReystream()]
-            
         except Exception as e: 
             P.logger.error(f'Exception:{str(e)}')
             P.logger.error(traceback.format_exc())

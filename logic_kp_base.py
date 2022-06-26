@@ -1,6 +1,6 @@
-import os, sys, traceback, re, json, threading, time, shutil, platform
+import os, sys, traceback, re, json, threading, time, shutil, platform, urllib, requests
 from datetime import datetime
-from flask import request, render_template, jsonify, redirect, send_file
+from flask import request, render_template, jsonify, redirect, send_file, Response
 from .plugin import P, logger, package_name, ModelSetting, LogicModuleBase, scheduler, app, SystemModelSetting, path_data, d
 name = 'base'
 
@@ -14,6 +14,7 @@ class LogicKPBase(LogicModuleBase):
         f'{name}_use_spotv': 'True',
         f'{name}_spotv_username': '',
         f'{name}_spotv_password': '',
+        f'{name}_use_spotv_proxy': 'False',
         f'{name}_use_naver_sports': 'True',
         f'{name}_use_coupangplay': 'True',
         f'{name}_coupangplay_username': '',
@@ -65,7 +66,36 @@ class LogicKPBase(LogicModuleBase):
                 req_source = req.args.get('source')
                 req_ch_id = req.args.get('ch_id')
                 url = self.get_url(req_source, req_ch_id)['url']
+                if req_source == 'spotv' and ModelSetting.get_bool(f'{name}_use_spotv_proxy'):
+                    url = url.replace('playlist.m3u8', 'chunklist_b6192000.m3u8')
+                    url = ToolUtil.make_apikey_url(f"/{package_name}/api/base/spotv.m3u8?url={urllib.parse.quote_plus(url)}")
                 return redirect(url, code=302)
+            elif sub == 'spotv.m3u8':
+                url = req.args.get('url')
+                url = urllib.parse.unquote_plus(url)
+                data = requests.get(url).text
+                fix_url = url.rsplit('/', 1)[0]
+                new_data = []
+                tmp = re.compile(r'\.ts$', re.MULTILINE).finditer(data)
+                for line in data.splitlines():
+                    line = line.strip()
+                    if line.endswith('.ts'):
+                        ts_url = urllib.parse.quote_plus(f"{fix_url}/{line}")
+                        u2 = ToolUtil.make_apikey_url(f"/{package_name}/api/base/spotv.ts?url={ts_url}")
+                        new_data.append(u2)
+                    else:
+                        new_data.append(line)
+                data = '\n'.join(new_data)
+                return data
+            elif sub == 'spotv.ts':
+                url = req.args.get('url')
+                url = urllib.parse.unquote_plus(url)
+                headers = {'Connection' : 'keep-alive'}
+                r = requests.get(url, headers=headers, stream=True, verify=False)
+                #rv = Response(r.iter_content(chunk_size=1024), r.status_code, content_type=r.headers['Content-Type'], direct_passthrough=True)
+                rv = Response(r.iter_content(chunk_size=1048576), r.status_code, content_type='video/MP2T', direct_passthrough=True)
+                rv.headers.add('Content-Range', r.headers.get('Content-Range'))
+                return rv
             elif sub == 'reystream.m3u8':
                 for source in self.source_map:
                     if source.source_name == 'reystream':
