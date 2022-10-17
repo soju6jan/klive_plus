@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div>
+  <form id="form_search" class="form-inline" style="text-align:left">
+    <div class="container-fluid" style="padding-left: 0px;">
+      <div class="row show-grid">
+        <span class="col-md-1">
+          <button id="list_refresh_load_btn" class="btn btn-sm btn-outline-success">새로고침</button>
+        </span>
+        <span class="col-md-6">
+          <select id="onair_select" name="onair_select" class="form-control form-control-sm">
+            <option value="onair" selected>방송중만</option>
+            <option value="all">전체</option>
+          </select>
+        </span>
+      </div>
+    </div>
+  </form>
+
+  {{ macros.m_row_start('5') }}
+  {{ macros.m_row_end() }}
+<div id="list_div"></div>
+</div> <!--전체-->
+<form name="playform">
+  <input type="hidden" id="play_title" name="play_title">
+  <input type="hidden" id="play_source_src"  name="play_source_src">
+  <input type="hidden" id="play_source_type"  name="play_source_type">
+</form>
+
+<script type="text/javascript">
+var current_data = null;
+
+$(document).ready(function(){
+  hideMenuModule();
+  globalSendCommand('broad_list_cpl', null, null, null, null, function(ret){
+    make_list(ret.broad_list);
+  });
+  make_list(null);
+});
+
+$("body").on('click', '#list_refresh_load_btn', function(e){
+  e.preventDefault();
+  globalSendCommand('broad_list_cpl', null, null, null, null, function(ret){
+    make_list(ret.broad_list);
+  });
+  make_list(null);
+});
+
+$("body").on('change', '#onair_select', function(e){
+  e.preventDefault();
+  make_list(current_data);
+});
+
+$("body").on('click', '#json_btn', function(e){
+  e.preventDefault();
+  showModal(current_data[$(this).data('idx')]);
+});
+
+
+$("body").on('click', '#play_btn', function(e){
+  e.preventDefault();
+  globalSendCommand('play_url', 'coupangplay', $(this).data('id'), null, null, function(ret){
+    console.log(ret);
+    if (ret.data == null) {
+      notify('에러', 'danger');
+      return;
+    }
+    var form = document.playform;
+    var url = '/videojs';
+    var popupWidth = 980;
+    var leftPos = screen.width - popupWidth;
+    window.open('', ret.data.url, "location=no, directories=no,resizable=no,status=no,toolbar=no,menubar=no,width=" + popupWidth + ", height=560, top=100, left=" + leftPos);
+    form.action = url;
+    form.method = "post";
+    form.target = ret.data.url;
+    $('#play_title').val(ret.data.title);
+    $('#play_source_src').val(ret.data.url);
+    $('#play_source_type').val('application/x-mpegURL');
+    form.submit();
+  });
+});
+
+
+$("body").on('click', '#play_url_btn', function(e){
+  e.preventDefault();
+  globalSendCommand('play_url', 'coupangplay', $(this).data('id'), null, null, function(ret){
+    console.log(ret);
+    if (ret.data == null) {
+      notify('에러', 'danger');
+      return;
+    }
+    str = ret.data.url + '<br><br>';
+    tmp = m_button('globalCliboardBtn', '클립보드 복사', {'text':ret.data.url}, 'success');
+    tmp += m_button('globalOpenBtn', '새창에서 열기', {'url':ret.data.url}, 'success');
+    str += m_button_group(tmp);
+    showModal(str, ret.data.title, false);
+  });
+});
+
+
+function make_list(data) {
+  current_data = data;
+  console.log(data);
+  str = '';
+  str = '<table id="result_table" class="table table-sm  tableRowHover "  ><thead class="thead-dark"><tr> \
+    <th style="width:15%; text-align:center;">Poster</th> \
+    <th style="width:10%; text-align:center;">상태</th> \
+    <th style="width:30%; text-align:left;">제목</th> \
+    <th style="width:10%; text-align:center;">시간</th> \
+    <th style="width:10%; text-align:center;">채널</th> \
+    <th style="width:10%; text-align:center;">Action</th> \
+    </tr></thead><tbody id="list">';
+  
+  count = 0;
+  select = $('#onair_select').val();
+  console.log(select)
+  if (data == null) {
+    str += '<tr><td colspan="6"><h4>로딩중..</h4></td></tr>';
+  } else {
+    for(i in data) {
+      if (select == 'onair' && data[i]._status != 0) continue;
+      console.log(data[i]);
+      str += '<tr class="chover" style="cursor: pointer;" data-toggle="collapse" data-target="#collapse_' + i + '" aria-expanded="true" >';
+      str += '<td scope="col" style="width:15%; text-align:left;"><img src="'+ data[i].images.poster.url + '" class="img-fluid rounded"></td>';
+      if (data[i]._status == -1) tmp = "종료";
+      else if (data[i]._status == 0) tmp = "종료";
+      else if (data[i]._status == 1) tmp = "예정";
+      str += '<td scope="col" style="width:10%; text-align:center;">'+ tmp + '</td>';
+      str += '<td scope="col" style="width:30%; text-align:left;">'+ data[i].title + '</td>';
+      str += '<td scope="col" style="width:10%; text-align:center;">'+ data[i]._start + '<br>' + data[i]._end + '</td>';
+      str += '<td scope="col" style="width:10%; text-align:center;">'+ data[i].airing_channel + '</td>';
+      
+      buttons = '';
+      buttons += '</span><input type="button" id="json_btn" value="JSON" class="btn btn-sm btn-info" data-idx="'+i+'"><span style="margin-left:10px"></span>';
+      if (data[i]._status == 0) {
+        buttons += '</span><input type="button" id="play_btn" value="Play" class="btn btn-sm btn-danger" data-id="'+data[i].id+'"><span style="margin-left:10px"></span>';
+        buttons += '</span><input type="button" id="play_url_btn" value="Play URL" class="btn btn-sm btn-success" data-id="'+data[i].id+'"><span style="margin-left:10px"></span>';
+      }
+      str += '<td scope="col" style="width:20%; text-align:center;">' + buttons + '</td>';
+      str += '</tr>';
+      count++;
+    }
+    if (count == 0) str += '<tr><td colspan="6"><h4>데이터가 없습니다.</h4></td></tr>';
+  }
+  str += '</table>';
+  $("#list_div").html(str);
+  return
+}
+
+</script>    
+{% endblock %}
