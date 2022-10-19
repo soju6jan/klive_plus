@@ -91,9 +91,9 @@ $("body").on('click', '#play_url_btn', function(e){
       return;
     }
     str = ret.data.url + '<br><br>';
-    tmp = m_button('globalCliboardBtn', '클립보드 복사', {'text':ret.data.url}, 'success');
-    tmp += m_button('globalOpenBtn', '새창에서 열기', {'url':ret.data.url}, 'success');
-    str += m_button_group(tmp);
+    tmp = j_button('globalCliboardBtn', '클립보드 복사', {'text':ret.data.url}, 'success');
+    tmp += j_button('globalOpenBtn', '새창에서 열기', {'url':ret.data.url}, 'success');
+    str += j_button_group(tmp);
     showModal(str, ret.data.title, false);
   });
 });

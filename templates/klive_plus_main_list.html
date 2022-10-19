@@ -79,9 +79,9 @@ $("body").on('click', '#play_url_btn', function(e){
       return;
     }
     str = ret.data.url + '<br><br>';
-    tmp = m_button('globalCliboardBtn', '클립보드 복사', {'text':ret.data.url}, 'success');
-    tmp += m_button('globalOpenBtn', '새창에서 열기', {'url':ret.data.url}, 'success');
-    str += m_button_group(tmp);
+    tmp = j_button('globalCliboardBtn', '클립보드 복사', {'text':ret.data.url}, 'success');
+    tmp += j_button('globalOpenBtn', '새창에서 열기', {'url':ret.data.url}, 'success');
+    str += j_button_group(tmp);
     showModal(str, ret.data.title, false);
   });
 });
@@ -117,10 +117,10 @@ function make_list(data) {
       str += '<td scope="col" style="width:15%; text-align:left;">'+ data[i].ch_name + '</td>';
       str += '<td scope="col" style="width:50%; text-align:left;">'+ data[i].current + '</td>';
       buttons = '';
-      buttons += m_button('play_btn', 'PLAY', {'source':data[i].source,'id':data[i].ch_id}, 'success', false, true);
-      buttons += m_button('play_url_btn', 'URL', {'source':data[i].source,'id':data[i].ch_id}, 'info', false, true);
+      buttons += j_button('play_btn', 'PLAY', {'source':data[i].source,'id':data[i].ch_id}, 'success', false, true);
+      buttons += j_button('play_url_btn', 'URL', {'source':data[i].source,'id':data[i].ch_id}, 'info', false, true);
       //buttons += '<input type="button" id="play_url_btn" value="Play" class="btn btn-sm btn-info" data-source="'+data[i].source+'" data-id="'+data[i].ch_id+'"><span style="margin-left:10px">';
-      buttons = m_button_group(buttons);
+      buttons = j_button_group(buttons);
       str += '<td scope="col" style="width:15%; text-align:center;">' + buttons + '</td>';
       str += '</tr>';
       count++;
