@@ -40,7 +40,7 @@ from plugin import *
 
 P = create_plugin_instance(setting)
 try:
-    if DEFINE_DEV:
+    if DEFINE_DEV and os.path.exists(os.path.join(os.path.dirname(__file__), 'mod_main.py')):
         from .mod_main import ModuleMain
     else:
         from support import SupportSC
