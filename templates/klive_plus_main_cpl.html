@@ -33,7 +33,7 @@ var current_data = null;
 
 $(document).ready(function(){
   hideMenuModule();
-  globalSendCommand('broad_list_cpl', null, null, null, null, function(ret){
+  globalSendCommand('broad_list_cpl', null, null, null, function(ret){
     make_list(ret.broad_list);
   });
   make_list(null);
@@ -41,7 +41,7 @@ $(document).ready(function(){
 
 $("body").on('click', '#list_refresh_load_btn', function(e){
   e.preventDefault();
-  globalSendCommand('broad_list_cpl', null, null, null, null, function(ret){
+  globalSendCommand('broad_list_cpl', null, null, null, function(ret){
     make_list(ret.broad_list);
   });
   make_list(null);
@@ -60,7 +60,7 @@ $("body").on('click', '#json_btn', function(e){
 
 $("body").on('click', '#play_btn', function(e){
   e.preventDefault();
-  globalSendCommand('play_url', 'coupangplay', $(this).data('id'), null, null, function(ret){
+  globalSendCommand('play_url', 'coupangplay', $(this).data('id'), null, function(ret){
     console.log(ret);
     if (ret.data == null) {
       notify('에러', 'danger');
@@ -84,7 +84,7 @@ $("body").on('click', '#play_btn', function(e){
 
 $("body").on('click', '#play_url_btn', function(e){
   e.preventDefault();
-  globalSendCommand('play_url', 'coupangplay', $(this).data('id'), null, null, function(ret){
+  globalSendCommand('play_url', 'coupangplay', $(this).data('id'), null, function(ret){
     console.log(ret);
     if (ret.data == null) {
       notify('에러', 'danger');
