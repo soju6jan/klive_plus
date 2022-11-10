@@ -4,10 +4,8 @@ package_name: "klive_plus"
 developer: "soju6jan"
 description: "KLive+"
 home: "https://github.com/flaskfarm/klive_plus"
-more: "https://raw.githubusercontent.com/flaskfarm/klive_plus/main/README.md"
+more: "https://raw.githubusercontent.com/soju6jan/klive_plus/main/README.md"
 
 require_plugin: 
   - "https://github.com/soju6jan/sjva"
-require_os: 
-require_running_type: 
 
