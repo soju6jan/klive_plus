@@ -61,7 +61,6 @@ $("body").on('click', '#json_btn', function(e){
 $("body").on('click', '#play_btn', function(e){
   e.preventDefault();
   globalSendCommand('play_url', 'coupangplay', $(this).data('id'), null, function(ret){
-    console.log(ret);
     if (ret.data == null) {
       notify('에러', 'danger');
       return;
@@ -85,7 +84,6 @@ $("body").on('click', '#play_btn', function(e){
 $("body").on('click', '#play_url_btn', function(e){
   e.preventDefault();
   globalSendCommand('play_url', 'coupangplay', $(this).data('id'), null, function(ret){
-    console.log(ret);
     if (ret.data == null) {
       notify('에러', 'danger');
       return;
@@ -101,7 +99,6 @@ $("body").on('click', '#play_url_btn', function(e){
 
 function make_list(data) {
   current_data = data;
-  console.log(data);
   str = '';
   str = '<table id="result_table" class="table table-sm  tableRowHover "  ><thead class="thead-dark"><tr> \
     <th style="width:15%; text-align:center;">Poster</th> \
@@ -114,13 +111,11 @@ function make_list(data) {
   
   count = 0;
   select = $('#onair_select').val();
-  console.log(select)
   if (data == null) {
     str += '<tr><td colspan="6"><h4>로딩중..</h4></td></tr>';
   } else {
     for(i in data) {
       if (select == 'onair' && data[i]._status != 0) continue;
-      console.log(data[i]);
       str += '<tr class="chover" style="cursor: pointer;" data-toggle="collapse" data-target="#collapse_' + i + '" aria-expanded="true" >';
       str += '<td scope="col" style="width:15%; text-align:left;"><img src="'+ data[i].images.poster.url + '" class="img-fluid rounded"></td>';
       if (data[i]._status == -1) tmp = "종료";

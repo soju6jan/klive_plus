@@ -50,7 +50,6 @@ $("body").on('click', '#json_btn', function(e){
 $("body").on('click', '#play_btn', function(e){
   e.preventDefault();
   globalSendCommand('play_url', $(this).data('source'), $(this).data('id'), null, function(ret){
-    console.log(ret);
     if (ret.data == null) {
       notify('에러', 'danger');
       return;
@@ -73,7 +72,6 @@ $("body").on('click', '#play_btn', function(e){
 $("body").on('click', '#play_url_btn', function(e){
   e.preventDefault();
   globalSendCommand('play_url', $(this).data('source'), $(this).data('id'), null, function(ret){
-    console.log(ret);
     if (ret.data == null) {
       notify('에러', 'danger');
       return;
@@ -88,7 +86,6 @@ $("body").on('click', '#play_url_btn', function(e){
 
 
 function make_list(data) {
-  console.log(data)
   current_data = data;
   str = '';
   str = '<table id="result_table" class="table table-sm  tableRowHover "  ><thead class="thead-dark"><tr> \
@@ -104,14 +101,7 @@ function make_list(data) {
     str += '<tr><td colspan="6"><h4>로딩중..</h4></td></tr>';
   } else {
     for(i in data) {
-      console.log(data[i]);
       str += '<tr class="chover" style="cursor: pointer;" data-toggle="collapse" data-target="#collapse_' + i + '" aria-expanded="true" >';
-      /*
-      if (false && data[i].logo !='') {
-        str += '<td scope="col" style="width:15%; text-align:left;"><img src="'+ data[i].logo + '" class="img-fluid rounded"></td>';
-      } else {
-        str += '<td style="width:5%; text-align:center;">'+(parseInt(i)+1)+'</td>';
-      }*/
       str += '<td style="width:5%; text-align:center;">'+(parseInt(i)+1)+'</td>';
       str += '<td scope="col" style="width:15%; text-align:left;">'+ data[i].source1 + '</td>';
       str += '<td scope="col" style="width:15%; text-align:left;">'+ data[i].ch_name + '</td>';
