@@ -34,7 +34,7 @@ setting = {
     'default_route': 'normal',
 }
 
-DEFINE_DEV = True
+DEFINE_DEV = False
 
 from plugin import *
 
