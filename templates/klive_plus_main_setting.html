@@ -14,6 +14,7 @@
 {{ macros.setting_input_text('spotv_username', 'username', value=arg['spotv_username'], desc=['평문 아님. 브라우저에서 암호화된 값 찾아서 입력']) }}
 {{ macros.setting_input_text('spotv_password', 'password', value=arg['spotv_password'], desc=['평문 아님. 브라우저에서 암호화된 값 찾아서 입력']) }}
 {{ macros.setting_checkbox('use_spotv_proxy', 'SPOTV Proxy 사용', value=arg['use_spotv_proxy'], desc=['Off: Redirect 방식. 해외는 재생 불가.', 'On : App에서 패킷을 읽어 리턴']) }}
+{{ macros.setting_checkbox('use_spotv_chunkurl', 'SPOTV chunk URL 사용', value=arg['use_spotv_chunkurl'], desc=['On: Player에 따라 FHD 화질이 자동 재생되지 않는 경우 사용']) }}
 </div>
 {{ macros.m_hr() }}
 
