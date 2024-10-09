@@ -1,3 +1,4 @@
-# klive_plus
+# KLive+
 
-FF용 플러그인
+- 1.2.1 (2024.10.09)   
+  Update

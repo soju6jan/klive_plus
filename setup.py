@@ -22,6 +22,14 @@ setting = {
                 ]
             },
             {
+                'uri': 'manual',
+                'name': '매뉴얼',
+                'list': [
+                    {'uri':'README.md', 'name':'ChangeLog'},
+                    {'uri':'files/manual.md', 'name':'매뉴얼'}
+                ]
+            },
+            {
                 'uri': 'log',
                 'name': '로그',
             },
