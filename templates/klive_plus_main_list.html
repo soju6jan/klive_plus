@@ -103,7 +103,7 @@ function make_list(data) {
     for(i in data) {
       str += '<tr class="chover" style="cursor: pointer;" data-toggle="collapse" data-target="#collapse_' + i + '" aria-expanded="true" >';
       str += '<td style="width:5%; text-align:center;">'+(parseInt(i)+1)+'</td>';
-      str += '<td scope="col" style="width:15%; text-align:left;">'+ data[i].source1 + '</td>';
+      str += '<td scope="col" style="width:15%; text-align:left;">'+ data[i].group + '</td>';
       str += '<td scope="col" style="width:15%; text-align:left;">'+ data[i].ch_name + '</td>';
       str += '<td scope="col" style="width:50%; text-align:left;">'+ data[i].current + '</td>';
       buttons = '';

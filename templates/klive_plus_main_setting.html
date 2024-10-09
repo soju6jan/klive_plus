@@ -7,52 +7,44 @@
 {{ macros.m_hr() }}
 <form id='setting' name='setting'>
 {{ macros.info_text_go_buttons('api_m3u', 'M3U', [['globalCliboardBtn','클립보드에 복사', [['text', arg['api_m3u']]]]], value=arg['api_m3u'], desc=None) }}
-{{ macros.m_hr() }}
 
-{{ macros.setting_checkbox('use_spotv', 'SPOTV', value=arg['use_spotv'], desc=None) }}
-<div id="use_spotv_div" class="collapse">
-{{ macros.setting_checkbox('use_spotv_proxy', 'SPOTV Proxy 사용', value=arg['use_spotv_proxy'], desc=['Off: Redirect 방식. 해외는 재생 불가.', 'On : App에서 패킷을 읽어 리턴']) }}
-{{ macros.setting_checkbox('use_spotv_chunkurl', 'SPOTV chunk URL 사용', value=arg['use_spotv_chunkurl'], desc=['On: Player에 따라 FHD 화질이 자동 재생되지 않는 경우 사용']) }}
-</div>
-{{ macros.m_hr() }}
-
-{{ macros.setting_checkbox('use_naver_sports', '네이버 스포츠', value=arg['use_naver_sports'], desc=None) }}
-{{ macros.m_hr() }}
-
-{{ macros.setting_checkbox('use_coupangplay', '쿠팡플레이', value=arg['use_coupangplay'], desc=None) }}
-<div id="use_coupangplay_div" class="collapse">
-{{ macros.setting_input_text('coupangplay_username', 'ID', value=arg['coupangplay_username'], desc=None) }}
-{{ macros.setting_input_text('coupangplay_password', 'PW', value=arg['coupangplay_password'], desc=None) }}
-</div>
-{{ macros.m_hr() }}
-
+<hr style="height: 3px; background-color: black; border: none;">
 {{ macros.setting_checkbox('use_sstv', '삼성TV+', value=arg['use_sstv'], desc=None) }}
 <div id="use_sstv_div" class="collapse">
 {{ macros.setting_checkbox('sstv_only_kor', '한국만', value=arg['sstv_only_kor'], desc=None) }}
 </div>
-{{ macros.m_hr() }}
 
+<hr style="height: 3px; background-color: black; border: none;">
 {{ macros.setting_checkbox('use_reystream', 'reystream', value=arg['use_reystream'], desc=None) }}
-{{ macros.m_hr() }}
 
-{{ macros.setting_checkbox('use_naver_now', '네이버 NOW', value=arg['use_naver_now'], desc=None) }}
+<hr style="height: 3px; background-color: black; border: none;">
+{{ macros.setting_checkbox('use_pandalive', '팬더TV', value=arg['use_pandalive'], desc=None) }}
+<div id="use_pandalive_div" class="collapse">
+  {{ macros.setting_input_text('pandalive_key', 'sesskey값', value=arg['pandalive_key'], desc=None) }}
+</div>
+
+<hr style="height: 3px; background-color: black; border: none;">
+{{ macros.setting_checkbox('use_popkontv', '팝콘TV', value=arg['use_popkontv'], desc=None) }}
+<div id="use_popkontv_div" class="collapse">
+  {{ macros.setting_input_text('popkontv_signid', 'signId', value=arg['popkontv_signid'], desc=None) }}
+  {{ macros.setting_input_text('popkontv_authorization', 'authorization', value=arg['popkontv_authorization'], desc=None) }}
+  {{ macros.setting_input_text('popkontv_clientkey', 'clientkey', value=arg['popkontv_clientkey'], desc=None) }}
+</div>
+
 </div>
 </form>
-
 
 
 <script type="text/javascript">
 $(document).ready(function(){
   hideMenuModule();
-  use_collapse("use_spotv");
-  use_collapse("use_naver_sports");
-  use_collapse("use_coupangplay");
   use_collapse("use_sstv");
+  use_collapse("use_pandalive");
+  use_collapse("use_popkontv");
 });
 
-$('#use_spotv').change(function() {use_collapse('use_spotv');});
-$('#use_naver_sports').change(function() {use_collapse('use_naver_sports');});
-$('#use_coupangplay').change(function() {use_collapse('use_coupangplay');});
 $('#use_sstv').change(function() {use_collapse('use_sstv');});
+$('#use_pandalive').change(function() {use_collapse('use_pandalive');});
+$('#use_popkontv').change(function() {use_collapse('use_popkontv');});
 </script>    
 {% endblock %}

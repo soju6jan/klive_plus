@@ -9,7 +9,7 @@ setting = {
         'list': [
             {
                 'uri': 'main',
-                'name': 'MAIN',
+                'name': '전체',
                 'list': [
                     {
                         'uri': 'setting',
@@ -17,12 +17,8 @@ setting = {
                     },
                     {
                         'uri': 'list',
-                        'name': '목록',
+                        'name': '채널',
                     },
-                    {
-                        'uri': 'cpl',
-                        'name': '쿠플 예정',
-                    }
                 ]
             },
             {
@@ -34,13 +30,17 @@ setting = {
     'default_route': 'normal',
 }
 
-DEFINE_DEV = False
-
 from plugin import *
 
+DEFINE_DEV = False
+if os.path.exists(os.path.join(os.path.dirname(__file__), 'mod_main.py')):
+    DEFINE_DEV = True
+    
 P = create_plugin_instance(setting)
+logger = P.logger
+
 try:
-    if DEFINE_DEV and os.path.exists(os.path.join(os.path.dirname(__file__), 'mod_main.py')):
+    if DEFINE_DEV:
         from .mod_main import ModuleMain
     else:
         from support import SupportSC
