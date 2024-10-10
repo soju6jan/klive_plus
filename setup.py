@@ -46,7 +46,7 @@ if os.path.exists(os.path.join(os.path.dirname(__file__), 'mod_main.py')):
     
 P = create_plugin_instance(setting)
 logger = P.logger
-
+PLUGIN_ROOT = os.path.dirname(__file__)
 try:
     #DEFINE_DEV = False
     if DEFINE_DEV:
