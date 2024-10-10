@@ -4,8 +4,19 @@
 {{ macros.m_button_group([['globalSettingSaveBtn', '설정 저장']])}}
 {{ macros.m_row_start('5') }}
 {{ macros.m_row_end() }}
-{{ macros.m_hr() }}
+
+<nav>  
+  {{ macros.m_tab_head_start() }}
+    {{ macros.m_tab_head('normal', '일반', true) }}
+    {{ macros.m_tab_head('yaml', 'yaml', false) }}
+    {{ macros.m_tab_head('auto', '자동 & 기타', false) }}
+  {{ macros.m_tab_head_end() }}
+</nav> 
+
 <form id='setting' name='setting'>
+<div class="tab-content" id="nav-tabContent">
+  {{ macros.m_tab_content_start('normal', true) }}
+
 {{ macros.info_text_go_buttons('api_m3u', 'M3U', [['globalCliboardBtn','클립보드에 복사', [['text', arg['api_m3u']]]]], value=arg['api_m3u'], desc=None) }}
 
 <hr style="height: 3px; background-color: black; border: none;">
@@ -26,11 +37,26 @@
 <hr style="height: 3px; background-color: black; border: none;">
 {{ macros.setting_checkbox('use_popkontv', '팝콘TV', value=arg['use_popkontv'], desc=None) }}
 <div id="use_popkontv_div" class="collapse">
-  {{ macros.setting_input_text('popkontv_signid', 'signId', value=arg['popkontv_signid'], desc=None) }}
+  {{ macros.setting_input_text('popkontv_signid', 'ID', value=arg['popkontv_signid'], desc=None) }}
+  {{ macros.setting_input_text('popkontv_signpw', 'PW', value=arg['popkontv_signpw'], desc=None) }}
   {{ macros.setting_input_text('popkontv_authorization', 'authorization', value=arg['popkontv_authorization'], desc=None) }}
   {{ macros.setting_input_text('popkontv_clientkey', 'clientkey', value=arg['popkontv_clientkey'], desc=None) }}
 </div>
+{{ macros.m_tab_content_end() }}
 
+{{ macros.m_tab_content_start('yaml', false) }}
+  {{ macros.setting_checkbox('use_makeyaml', 'yaml 생성', value=arg['use_makeyaml'], desc=None) }}
+  <div id="use_makeyaml_div" class="collapse">
+  {{ macros.setting_input_text('makeyaml_path', '경로', value=arg['makeyaml_path'], desc=None) }}
+</div>
+{{ macros.m_tab_content_end() }}
+
+
+{{ macros.m_tab_content_start('auto', false) }}
+  {{ macros.global_setting_scheduler_button(arg['is_include'], arg['is_running']) }}
+  {{ macros.setting_input_text('main_interval', '스케쥴링 실행 정보', value=arg['main_interval'], col='3', desc=['Inverval(minute 단위)이나 Cron 설정']) }}
+  {{ macros.setting_checkbox('main_auto_start', '시작시 자동실행', value=arg['main_auto_start'], desc=['On : 시작시 자동으로 스케쥴러에 등록됩니다.', 'm3u 파일생성. 현재 방송 찾기']) }}
+{{ macros.m_tab_content_end() }}
 </div>
 </form>
 
@@ -41,10 +67,13 @@ $(document).ready(function(){
   use_collapse("use_sstv");
   use_collapse("use_pandalive");
   use_collapse("use_popkontv");
+  use_collapse("use_makeyaml");
+
 });
 
 $('#use_sstv').change(function() {use_collapse('use_sstv');});
 $('#use_pandalive').change(function() {use_collapse('use_pandalive');});
 $('#use_popkontv').change(function() {use_collapse('use_popkontv');});
+$('#use_makeyaml').change(function() {use_collapse('use_makeyaml');});
 </script>    
 {% endblock %}

@@ -25,7 +25,7 @@ var current_data = null;
 $(document).ready(function(){
   //hideMenuModule();
   
-  globalSendCommand('broad_list', null, null, null, function(ret){
+  globalSendCommand('broad_list', false, null, null, function(ret){
     make_list(ret.ch_list);
   });
   make_list(null);
@@ -34,7 +34,7 @@ $(document).ready(function(){
 $("body").on('click', '#list_refresh_load_btn', function(e){
   e.preventDefault();
 
-  globalSendCommand('broad_list', null, null, null, function(ret){
+  globalSendCommand('broad_list', true, null, null, function(ret){
     make_list(ret.ch_list);
   });
   make_list(null);

@@ -20,6 +20,10 @@ from .setup import *
 class SourceBase:
     def __init__(self):
         self.reset_ch_list()
+        self.name = ''
+        self.source_name = ''
+        self.poster = ""
+        self.headers = {}
          
     def get_list(self):
         pass
@@ -36,7 +40,7 @@ class SourceBase:
     def process_ts(self, req):
         pass
 
-    def get_max_bandwidth(self, text):
+    def get_max_bandwidth(self, text, first=False):
         try:
             max_data = {'set':False, 'bandwidth':0, 'url':''}
             for tmp in text.split('\n'):
@@ -54,6 +58,8 @@ class SourceBase:
                     if max_data['set']:
                         max_data['url'] = tmp
                         max_data['set'] = False
+                        if first:
+                            break
                     else:
                         continue
             max_data['ret'] = 'success'
@@ -93,7 +99,10 @@ class Channel:
         self.group = group
         
     def get_title(self):
-        tmp = f"{self.current} ({self.ch_name})".replace('()', '')
+        if self.current == None or self.current == '':
+            tmp = self.ch_name
+        else:
+            tmp = f"{self.current} ({self.ch_name})".replace('()', '')
         return tmp
 
     def as_dict(self):
