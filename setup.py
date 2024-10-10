@@ -48,6 +48,7 @@ P = create_plugin_instance(setting)
 logger = P.logger
 
 try:
+    #DEFINE_DEV = False
     if DEFINE_DEV:
         from .mod_main import ModuleMain
     else:
