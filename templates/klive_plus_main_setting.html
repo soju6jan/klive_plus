@@ -42,7 +42,11 @@
   {{ macros.setting_input_text('popkontv_authorization', 'authorization', value=arg['popkontv_authorization'], desc=None) }}
   {{ macros.setting_input_text('popkontv_clientkey', 'clientkey', value=arg['popkontv_clientkey'], desc=None) }}
 </div>
+
+<hr style="height: 3px; background-color: black; border: none;">
+{{ macros.setting_checkbox('use_iptvorg', 'iptv-org', value=arg['use_iptvorg'], desc=None) }}
 {{ macros.m_tab_content_end() }}
+
 
 {{ macros.m_tab_content_start('yaml', false) }}
   {{ macros.setting_checkbox('use_makeyaml', 'yaml 생성', value=arg['use_makeyaml'], desc=None) }}
