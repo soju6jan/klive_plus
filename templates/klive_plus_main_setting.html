@@ -29,9 +29,14 @@
 {{ macros.setting_checkbox('use_reystream', 'reystream', value=arg['use_reystream'], desc=None) }}
 
 <hr style="height: 3px; background-color: black; border: none;">
+{{ macros.setting_checkbox('use_chzzk', '치지직', value=arg['use_chzzk'], desc=None) }}
+
+<hr style="height: 3px; background-color: black; border: none;">
 {{ macros.setting_checkbox('use_pandalive', '팬더TV', value=arg['use_pandalive'], desc=None) }}
 <div id="use_pandalive_div" class="collapse">
   {{ macros.setting_input_text('pandalive_key', 'sesskey값', value=arg['pandalive_key'], desc=None) }}
+  {{ macros.setting_checkbox('pandalive_use_proxy', 'Proxy 사용', value=arg['pandalive_use_proxy'], desc=None) }}
+  {{ macros.setting_input_text('pandalive_proxy_url', 'Proxy URL', value=arg['pandalive_proxy_url'], desc=None) }}
 </div>
 
 <hr style="height: 3px; background-color: black; border: none;">

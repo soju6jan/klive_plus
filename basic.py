@@ -23,7 +23,7 @@ class SourceBase:
         self.name = ''
         self.source_name = ''
         self.poster = ""
-        self.headers = {}
+        self.headers = default_headers
          
     def get_list(self):
         pass

@@ -3,6 +3,9 @@
 
 <div>
   {{ macros.m_button_group([['list_refresh_load_btn', '새로고침']])}}
+
+  {{ macros.select('ch_group', [['all', '전체 채널'],['sstv', '삼성TV+'], ['reystream', 'reystream'], ['chzzk', '치지직'], ['pandalive', '팬더TV'], ['popkontv', '팝콘TV'], ['iptvorg', 'iptv-org']] ) }}
+
   {{ macros.m_row_start('5') }}
   {{ macros.m_row_end() }}
 
@@ -21,6 +24,8 @@
 var package_name = "{{arg['package_name'] }}";
 var sub = "{{arg['sub'] }}";
 var current_data = null;
+var current_group = 'all';
+
 
 $(document).ready(function(){
   //hideMenuModule();
@@ -28,7 +33,13 @@ $(document).ready(function(){
   globalSendCommand('broad_list', false, null, null, function(ret){
     make_list(ret.ch_list);
   });
-  make_list(null);
+});
+
+$("body").on('change', '#ch_group', function(e){
+  e.preventDefault();
+  current_group = document.getElementById("ch_group").value;
+  console.log(current_group);
+  make_list();
 });
 
 $("body").on('click', '#list_refresh_load_btn', function(e){
@@ -37,7 +48,6 @@ $("body").on('click', '#list_refresh_load_btn', function(e){
   globalSendCommand('broad_list', true, null, null, function(ret){
     make_list(ret.ch_list);
   });
-  make_list(null);
 });
 
 
@@ -86,7 +96,10 @@ $("body").on('click', '#play_url_btn', function(e){
 
 
 function make_list(data) {
-  current_data = data;
+  if (data != null) {
+    current_data = data;
+  }
+  data = current_data
   str = '';
   str = '<table id="result_table" class="table table-sm  tableRowHover "  ><thead class="thead-dark"><tr> \
     <th style="width:5%; text-align:center;">IDX</th> \
@@ -100,9 +113,13 @@ function make_list(data) {
   if (data == null) {
     str += '<tr><td colspan="6"><h4>로딩중..</h4></td></tr>';
   } else {
+    no = 0;
     for(i in data) {
+      //console.log(data[i])
+      if (current_group != 'all' && data[i].source != current_group) continue;
+      no++;
       str += '<tr class="chover" style="cursor: pointer;" data-toggle="collapse" data-target="#collapse_' + i + '" aria-expanded="true" >';
-      str += '<td style="width:5%; text-align:center;">'+(parseInt(i)+1)+'</td>';
+      str += '<td style="width:5%; text-align:center;">'+(parseInt(no))+'</td>';
       str += '<td scope="col" style="width:15%; text-align:left;">'+ data[i].group + '</td>';
       str += '<td scope="col" style="width:15%; text-align:left;">'+ data[i].ch_name + '</td>';
       str += '<td scope="col" style="width:50%; text-align:left;">'+ data[i].current + '</td>';

@@ -1,4 +1,6 @@
 # KLive+
+- 1.4.0 (2024.10.18)  
+  append chzzk   
 
 - 1.3.2 (2024.10.15)  
   panda, rey fix
