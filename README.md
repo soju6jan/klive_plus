@@ -5,7 +5,7 @@
   ㆍ 쿠플 재추가. 쿠키 입력 필요하며 볼 수 있는 권한이 있는 방송만 시청 가능.  
   ㆍ ALIVE에 있던 SPOTV 추가.  
   ㆍ reystream가 유사한 다른 사이트로 변경되어 toto로 변경.  
-  ㆍ yaml 생성시 toto, coupangplay는 리얼주소로..  
+  ㆍ yaml 생성시 coupangplay는 리얼주소로..  
 
   <img src="https://i.imgur.com/PVc2QS8.png" width="70%" height="70%" />
 
