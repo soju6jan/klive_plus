@@ -21,9 +21,11 @@ class SourceBase:
     def __init__(self):
         self.reset_ch_list()
         self.name = ''
+        self.name_m3u = ''
         self.source_name = ''
         self.poster = ""
         self.headers = default_headers
+        self.is_drm = False
          
     def get_list(self):
         pass
@@ -88,7 +90,7 @@ class SourceBase:
 
 
 class Channel:
-    def __init__(self, ch_id, ch_name, current, url=None, logo='', info=None, source=None, group=None):
+    def __init__(self, ch_id, ch_name, current, url=None, logo='', info=None, source=None, group=None, is_drm=False):
         self.ch_id = ch_id
         self.ch_name = ch_name
         self.current = current
@@ -97,6 +99,7 @@ class Channel:
         self.info = info
         self.source = source
         self.group = group
+        self.is_drm = is_drm
         
     def get_title(self):
         if self.current == None or self.current == '':

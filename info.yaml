@@ -1,11 +1,7 @@
 title: "KLive+"
-version: "1.4.2"
+version: "1.5.0"
 package_name: "klive_plus"
 developer: "soju6jan"
 description: "KLive+"
 home: "https://github.com/flaskfarm/klive_plus"
 more: "https://raw.githubusercontent.com/soju6jan/klive_plus/main/README.md"
-
-require_plugin: 
-  - "https://github.com/soju6jan/sjva"
-
