@@ -20,12 +20,10 @@
 {{ macros.info_text_go_buttons('api_m3u', 'M3U', [['globalCliboardBtn','클립보드에 복사', [['text', arg['api_m3u']]]]], value=arg['api_m3u'], desc=None) }}
 
 <hr style="height: 3px; background-color: black; border: none;">
-{{ macros.setting_checkbox('use_spotv', 'SPOTV', value=arg['use_spotv'], desc=None) }}
-
-<hr style="height: 3px; background-color: black; border: none;">
 {{ macros.setting_checkbox('use_coupangplay', '쿠팡플레이', value=arg['use_coupangplay'], desc=None) }}
 <div id="use_coupangplay_div" class="collapse">
-  {{ macros.setting_input_textarea('coupangplay_cookie', 'Cookie', value=arg['coupangplay_cookie'], row='6') }}
+  {{ macros.setting_input_text('coupangplay_id', 'ID', value=arg['coupangplay_id'], desc=None) }}
+  {{ macros.setting_input_text('coupangplay_pw', 'PW', value=arg['coupangplay_pw'], desc=None) }}
 </div>
 
 <hr style="height: 3px; background-color: black; border: none;">
@@ -33,9 +31,6 @@
 <div id="use_sstv_div" class="collapse">
 {{ macros.setting_checkbox('sstv_only_kor', '한국만', value=arg['sstv_only_kor'], desc=None) }}
 </div>
-
-<hr style="height: 3px; background-color: rgb(0, 0, 0); border: none;">
-{{ macros.setting_checkbox('use_toto', 'toto', value=arg['use_toto'], desc=None) }}
 
 <hr style="height: 3px; background-color: black; border: none;">
 {{ macros.setting_checkbox('use_chzzk', '치지직', value=arg['use_chzzk'], desc=None) }}
